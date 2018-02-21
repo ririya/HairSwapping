@@ -36,4 +36,10 @@ static const int NUMBER_OF_FACE_COLUMNS_ALLOWED_HAIR = 10;
 
 static const double ENERGY_WEIGHT = 2.0;
 
+static const int MAX_T = 10;
+static const int STEP_T = 2;
+static const double MIN_SCALE = 0.8;
+static const double MAX_SCALE = 1.2;
+static const double STEP_S = 0.1;
+
 #endif

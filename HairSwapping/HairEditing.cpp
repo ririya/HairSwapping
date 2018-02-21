@@ -101,12 +101,9 @@ Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Mat hairMask, 
 	int minEnergy = synthesizedFace.cols*synthesizedFace.rows;
 	int bestEnergyHoles = minEnergy; 
 	int bestEnergyHairOverlap = minEnergy;
+	Mat bestScaledHair;
 
-	int maxT = 10;
-	int stepT = 2;
-	double minScale = 0.8;
-	double maxScale = 1.2;
-	double stepS = 0.1;
+	
 	double bestParams[4]; //best tx, ty, sX, sY
 
 	time_t start, end;
@@ -115,17 +112,17 @@ Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Mat hairMask, 
 
 	printf("Calculating best hair position...\n");
 	
-	for (int tx = -maxT; tx <= maxT; tx+=stepT)
+	for (int tx = -MAX_T; tx <= MAX_T; tx+= STEP_T)
 	{
-		for (int ty = -maxT; ty <= maxT; ty+= stepT)
+		for (int ty = -MAX_T; ty <= MAX_T; ty+= STEP_T)
 		{
 			Mat currHairPixels, currHairMask;
 			Mat translationMatrix = (Mat_<double>(2, 3) << 1, 0, tx, 0, 1, ty);
 			warpAffine(hairPixels, currHairPixels, translationMatrix, hairPixels.size(), 1, 0, Scalar(BACKGROUND_HAIR_B, BACKGROUND_HAIR_G, BACKGROUND_HAIR_R,0));
-			
-			for (double sX = minScale; sX <= maxScale; sX += stepS)
+		
+			for (double sX = MIN_SCALE; sX <= MAX_SCALE; sX += STEP_S)
 			{
-				for (double sY = minScale; sY <= maxScale; sY += stepS)
+				for (double sY = MIN_SCALE; sY <= MAX_SCALE; sY += STEP_S)
 				{
 
 					Mat scaledHairX = scaleHair(currHairPixels, refPointX, refPointY, sX, 1, Scalar(BACKGROUND_HAIR_B, BACKGROUND_HAIR_G, BACKGROUND_HAIR_R,0));
@@ -147,6 +144,7 @@ Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Mat hairMask, 
 
 					if (currEnergy < minEnergy)
 					{
+						bestScaledHair = scaledHair;
 						bestEnergyHoles = energyHoles;
 						bestEnergyHairOverlap = energyHairOverlap;
 						minEnergy = currEnergy;
@@ -169,6 +167,10 @@ Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Mat hairMask, 
 	double dif = difftime(end, start);
 	printf("Finished calculting best hair position in %.2lf seconds.\n", dif);
 	printf("Type a key to continue...", dif);
+
+	//cv::namedWindow("bestScaledHair", CV_WINDOW_AUTOSIZE);
+	//cv::imshow("bestScaledHair", bestScaledHair);
+	//cv::waitKey();
 
 	cv::namedWindow("BestMatch", CV_WINDOW_AUTOSIZE);
 	cv::imshow("BestMatch", BestMatch);

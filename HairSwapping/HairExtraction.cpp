@@ -37,7 +37,7 @@ int extractHair(Mat img, Face face, Mat *labels, Hair *hair)
 	Mat labelsSequence = segmentImage(pixelSequence, centers, img.rows, img.cols);
 
 	*labels = getLabelsImage(labelsSequence, img.rows, img.cols);
-
+	
 	Mat hairImageMask = findHairPixels(pixelSequence, labelsSequence, img.rows, img.cols, face.getUpperPointX(), face.getUpperPointY());
 	
 	Scalar checkSum = sum(hairImageMask);

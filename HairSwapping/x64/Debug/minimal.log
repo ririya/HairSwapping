@@ -1,3 +1,8 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (minimal.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  hairSwapping.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(73): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(74): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(216): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(239): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
   minimal.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\HairSwapping\x64\Debug\HairSwapping.exe
   minimal.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\HairSwapping\x64\Debug\HairSwapping.pdb (Partial PDB)
