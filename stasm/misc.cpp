@@ -816,8 +816,8 @@ vec_Rect Detect(                            // detect faces or facial features
     // to jump to 160 MBytes (multiface2.jpg) versus less than 50 MBytes
     // for the rest of Stasm (Feb 2013).
 
-    //cascade.detectMultiScale(roi, feats, scale_factor, min_neighbors, flags,
-      //                       cvSize(minwidth_pixels, minwidth_pixels));
+   /* cascade.detectMultiScale(roi, feats, scale_factor, min_neighbors, flags,
+                            cvSize(minwidth_pixels, minwidth_pixels));*/
 
 	cascade.detectMultiScale(roi, feats, 1.1, 2);
 

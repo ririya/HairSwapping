@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <list>
+#include <map> 
+#include <iostream>
+#include <fstream>
 
 // OpenCV
 #include <opencv2//core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include "opencv/highgui.h"
-#include "stasm_lib.h"
 #include "faceRecognition.h"
+#include "Face.h"
 
 using namespace cv;
 
@@ -30,22 +31,37 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 	Rect RectB;
 	Rect RectC;
 
-	int foundface;
+	String command = "stasm.exe " + (String) path + " " + dataDir;
+	
+	int retCode = system(command.c_str());
 
 	float landmarks[2 * stasm_NLANDMARKS]; // x,y coords (note the 2)
 
-	if (!stasm_search_single(&foundface, landmarks,
+	/*if (!stasm_search_single(&foundface, landmarks,
 		(const char*)img.data, img.cols, img.rows, path, dataDir))
 	{
 		printf("Error in stasm_search_single: %s\n", stasm_lasterr());
 		exit(1);
-	}
+	}*/
 
-	if (!foundface)
+	if (retCode != 0)
 		printf("No face found in %s\n", path);
 	else
 	{
-		stasm_force_points_into_image(landmarks, img.cols, img.rows);		
+		std::ifstream file;
+		file.open(STASM_FILE);
+
+		for (int l = 0;l < stasm_NLANDMARKS;l++)
+		{
+			std::string curr_landmark;
+			std::getline(file, curr_landmark, ',');
+
+			landmarks[2 * l] = std::stoi(curr_landmark);
+
+			std::getline(file, curr_landmark, '\n');
+
+			landmarks[2 * l + 1] = std::stoi(curr_landmark);
+		}	
 
 		faceMask = detectUpperBoundaries(img, landmarks, &upperPointX, &upperPointY);
 
@@ -59,11 +75,12 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 
 		//find regions A,B,C using landmarks
 		int x1A = landmarks[2 * LEFT_EDGE_OF_LEFT_EYE_IND];
-		int x2A = landmarks[2 * LEFT_EDGE_OF_NOSE_IND];
+		int x2A = landmarks[2 * LEFT_EDGE_OF_NOSE_IND] - REGION_A_OFFSET_FROM_NOSE;
 		int top = min(landmarks[2 * BASE_OF_LEFT_EYE_IND + 1] + 5, landmarks[2 * BASE_OF_RIGHT_EYE_IND + 1] + 5);	
-		int bottom = landmarks[2 * BASE_OF_NOSE_IND + 1];		
+		int bottom = landmarks[2 * BASE_OF_NOSE_IND + 1];				
 		int widthA = x2A - x1A;
 		int height = bottom - top;
+
 		RectA = Rect(x1A, top, widthA, height);
 		rectangle(img, RectA, 255);
 		//regionA = img(RectA);
@@ -75,12 +92,16 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 		rectangle(img, RectB, 255);
 		//regionB = img(RectB);
 
-		int x1C = landmarks[2 * RIGHT_EDGE_OF_NOSE_IND];
-		int x2C = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND];
+		int x1C = landmarks[2 * RIGHT_EDGE_OF_NOSE_IND] + REGION_C_OFFSET_FROM_NOSE;
+		int x2C = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND];		
 		int widthC = x2C - x1C;
 		RectC = Rect(x1C, top, widthC, height);
 		rectangle(img, RectC, 255);
 		//regionC = img(RectC);
+
+	/*	namedWindow("img", CV_WINDOW_AUTOSIZE);
+		cv::imshow("img", img);
+		cv::waitKey();*/
 
 	/*	cv::imshow("regionA", regionA);
 		cv::waitKey();

@@ -1,4 +1,7 @@
 #include "faceRecognition.h"
+#include "face.h"
+
+using namespace std;
 using namespace cv;
 
 #ifndef HAIR_EXTRACTION_H

@@ -1,0 +1,126 @@
+﻿  SkinSynthesis.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\skinsynthesis.cpp(205): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\skinsynthesis.cpp(206): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\skinsynthesis.cpp(219): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\skinsynthesis.cpp(220): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+  hairSwapping.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(67): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(68): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(210): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(218): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
+  HairExtraction.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(726): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(727): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(728): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(715): warning C4101: 'currG': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(715): warning C4101: 'currB': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(715): warning C4101: 'currR': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(742): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(743): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(744): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(734): warning C4101: 'currG': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(734): warning C4101: 'currB': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairextraction.cpp(734): warning C4101: 'currR': unreferenced local variable
+  HairEditing.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(86): warning C4101: 'tStartOverlap': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(86): warning C4101: 'tEndOverlap': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(86): warning C4101: 'tStartSwap': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(86): warning C4101: 'tStartHoles': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(86): warning C4101: 'tEndHoles': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(86): warning C4101: 'tEndSwap': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(266): warning C4474: 'printf' : too many arguments passed for format string
+  e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(266): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(196): warning C4101: 'tStartScale': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(196): warning C4101: 'tEndScale': unreferenced local variable
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(310): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(323): warning C4018: '<': signed/unsigned mismatch
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(541): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(542): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(543): warning C4244: '=': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(572): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(573): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(590): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(630): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(645): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(708): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairediting.cpp(720): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  guidedfilter.cpp
+  globalmatting.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\globalmatting.cpp(307): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\globalmatting.cpp(308): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\globalmatting.cpp(313): warning C4018: '>=': signed/unsigned mismatch
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\globalmatting.cpp(444): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\globalmatting.cpp(495): warning C4244: '=': conversion from 'float' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\globalmatting.cpp(496): warning C4244: '=': conversion from 'float' to 'uchar', possible loss of data
+  FaceRecognition.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(54): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(55): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(57): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(58): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(61): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(62): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(63): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(71): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(72): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(79): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(93): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(94): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(95): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(96): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(97): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(98): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(99): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(100): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(101): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(102): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(103): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(104): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(130): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(136): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(137): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(139): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(140): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(160): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(161): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(165): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(166): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(174): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(175): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(177): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(178): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(203): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(204): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(206): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\facerecognition.cpp(207): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ColorEstimate.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\colorestimate.cpp(75): warning C4244: 'initializing': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\colorestimate.cpp(76): warning C4244: 'initializing': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\colorestimate.cpp(77): warning C4244: 'initializing': conversion from 'double' to 'uchar', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\colorestimate.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'uchar', possible loss of data
+  stasm_lib.cpp
+  stasm.cpp
+  startshape.cpp
+  shapemod.cpp
+  shapehacks.cpp
+  shape17.cpp
+  print.cpp
+  pinstart.cpp
+  initasm.cpp
+  facedet.cpp
+  misc.cpp
+  landmarks.cpp
+  Generating Code...
+  Compiling...
+  hatdesc.cpp
+  hat.cpp
+  faceroi.cpp
+  eyedist.cpp
+  eyedet.cpp
+  err.cpp
+  convshape.cpp
+  classicdesc.cpp
+  asm.cpp
+  Generating Code...
+opencv_highgui2413d.lib(opencv_highgui2413d.dll) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'X86'

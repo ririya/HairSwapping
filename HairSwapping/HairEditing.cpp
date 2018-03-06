@@ -8,9 +8,7 @@
 #include <opencv2//core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include "opencv/highgui.h"
-#include "stasm_lib.h"
-#include "FaceRecognition.h"
+#include "Face.h"
 #include "HairExtraction.h"
 #include "SkinSynthesis.h"
 #include "HairEditing.h"

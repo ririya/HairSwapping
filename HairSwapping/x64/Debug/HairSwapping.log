@@ -1,0 +1,13 @@
+﻿  ts.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(44): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(45): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(46): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(47): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(48): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(49): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(50): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(51): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(153): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'unsigned __int64'
+  e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(153): note: consider using '%zd' in the format string
+  HairSwapping.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\HairSwapping\x64\Debug\HairSwapping.exe
+  HairSwapping.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\HairSwapping\x64\Debug\HairSwapping.pdb (Partial PDB)

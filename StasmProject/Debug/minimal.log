@@ -1,0 +1,32 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (HairSwapping.vcxproj, minimal.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(937,5): warning MSB8027: Two or more files with the name of stasm.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\stasm\stasm.cpp, stasm.cpp.
+  facedet.cpp
+  Generating Code...
+  Compiling...
+  stasm.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasmproject\stasm.cpp(41): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
+  stasm_lib.cpp
+  stasm.cpp
+  startshape.cpp
+  shapemod.cpp
+  shapehacks.cpp
+  shape17.cpp
+  print.cpp
+  pinstart.cpp
+  misc.cpp
+  landmarks.cpp
+  hatdesc.cpp
+  hat.cpp
+  faceroi.cpp
+  eyedist.cpp
+  eyedet.cpp
+  err.cpp
+  convshape.cpp
+  classicdesc.cpp
+  asm.cpp
+  Generating Code...
+  Compiling...
+  initasm.cpp
+  Generating Code...
+Debug\stasm.obj : warning LNK4042: object specified more than once; extras ignored
+opencv_imgproc2413d.lib(opencv_imgproc2413d.dll) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'X86'

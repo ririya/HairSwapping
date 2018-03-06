@@ -1,8 +1,3 @@
-// minimal.cpp: Display the landmarks of a face in an image.
-//              This demonstrates stasm_search_single.
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <list>
@@ -11,8 +6,7 @@
 #include <opencv2//core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include "opencv/highgui.h"
-#include "stasm_lib.h"
+#include <opencv2/photo.hpp>"
 #include "FaceRecognition.h"
 #include "HairExtraction.h"
 #include "SkinSynthesis.h"
@@ -120,8 +114,48 @@ std::string removeExtension(const std::string& filename) {
 	return filename.substr(0, lastdot);
 }
 
-int main(int argc, char *argv[])
+int main2(int argc, char *argv[])
 {
+
+	//Mat src = imread("airplane.jpg");
+	//Mat dst = imread("sky.jpg");
+
+	//int nChannelssrc = src.channels();
+	//int nChannelsdst = dst.channels();
+
+	//// Create a rough mask around the airplane.
+	////Mat src_mask = Mat::zeros(src.rows, src.cols, src.depth());
+
+	//Mat src_mask = Mat(src.rows, src.cols, CV_8UC1, Scalar(255));
+
+	//int nChannels = src_mask.channels();
+
+	//// Define the mask as a closed polygon
+	////Point poly[1][7];
+	////poly[0][0] = Point(4, 80);
+	////poly[0][1] = Point(30, 54);
+	////poly[0][2] = Point(151, 63);
+	////poly[0][3] = Point(254, 37);
+	////poly[0][4] = Point(298, 90);
+	////poly[0][5] = Point(272, 134);
+	////poly[0][6] = Point(43, 122);
+
+	////const Point* polygons[1] = { poly[0] };
+	////int num_points[] = { 7 };
+
+	////// Create mask by filling the polygon
+	////fillPoly(src_mask, polygons, num_points, 1, Scalar(255, 255, 255));
+
+	////// The location of the center of the src in the dst
+	//Point center(800, 100);
+
+	//// Seamlessly clone src into dst and put the results in output
+	//Mat output;
+	//seamlessClone(src, dst, src_mask, center, output, NORMAL_CLONE);
+
+ // cv:namedWindow("output", WINDOW_AUTOSIZE);
+	//cv::imshow("output", output);
+	//cv::waitKey();
 
 	/*string dataDir = "data/";
 	string faceDir = "faces/";
@@ -207,6 +241,8 @@ int main(int argc, char *argv[])
 	const char * pathModel = pathStringModel.c_str();
 	const char * dataDirC = dataDir.c_str();
 
+	int retCode;
+
 	Mat_<unsigned char> imgGrayModel(imread(pathModel, CV_LOAD_IMAGE_GRAYSCALE));
 	Mat imgRGBModel(imread(pathModel, CV_LOAD_IMAGE_COLOR));
 	if (!imgGrayModel.data)
@@ -214,6 +250,10 @@ int main(int argc, char *argv[])
 		printf("Cannot load %s\n", imgGrayModel);
 		exit(1);
 	}
+
+	/*cv::namedWindow("imgGrayModel", WINDOW_AUTOSIZE);
+	cv::imshow("imgGrayModel", imgGrayModel);
+	cv::waitKey(0);*/
 
 	Mat_<unsigned char> imgGrayTarget(imread(pathTarget, CV_LOAD_IMAGE_GRAYSCALE));
 	Mat imgRGBTarget(imread(pathTarget, CV_LOAD_IMAGE_COLOR));
@@ -223,7 +263,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	printf("Detecting face from model... \n");
+	/*printf("Detecting face from model... \n");
 	Face faceModel = detectFace(imgGrayModel, pathModel, dataDirC);
 	printf("Face detected. \n");
 
@@ -231,12 +271,12 @@ int main(int argc, char *argv[])
 	Hair hairModel;
 
 	printf("Extracting hair from model... \n");
-	int retCode = extractHair(imgRGBModel, faceModel, &segmentationLabelsModel, &hairModel);
+	retCode = extractHair(imgRGBModel, faceModel, &segmentationLabelsModel, &hairModel);
 	if (retCode == -1)
 	{
 		printf("Cannot extract hair. \n");
 	}
-	printf("Hair extracted. \n");
+	printf("Hair extracted. \n");*/
 	
 	printf("Detecting face from target... \n");
 	Face faceTarget = detectFace(imgGrayTarget, pathTarget, dataDirC);
@@ -257,15 +297,16 @@ int main(int argc, char *argv[])
 	Mat synthesizedface = synthesizeSkin(imgRGBTarget, faceTarget, hairTarget.getHairMask());
 	printf("Face synthesized. \n");
 
+	/*cv:namedWindow("synthesizedface", WINDOW_AUTOSIZE);
 	cv::imshow("synthesizedface", synthesizedface);
-	cv::waitKey();
+	cv::waitKey();*/
 
 
-	Mat hairSwap = swapHair(hairModel, faceTarget, imgRGBModel, imgRGBTarget, synthesizedface);
+	//Mat hairSwap = swapHair(hairModel, faceTarget, imgRGBModel, imgRGBTarget, synthesizedface);
 
-	Mat resultImage = generateResultImage(imgRGBTarget, imgRGBModel, hairSwap);
+	//Mat resultImage = generateResultImage(imgRGBTarget, imgRGBModel, hairSwap);
 
-	cv::imwrite(resultsDir + "Hair" + removeExtension(model) + "xFace" + removeExtension(target) + ".bmp", resultImage);
+	//cv::imwrite(resultsDir + "Hair" + removeExtension(model) + "xFace" + removeExtension(target) + ".bmp", resultImage);
 	
     return 0;
 }

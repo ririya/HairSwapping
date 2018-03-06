@@ -6,10 +6,8 @@
 #include <opencv2//core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include "opencv/highgui.h"
-#include "stasm_lib.h"
 #include "HairExtraction.h"
-#include "faceRecognition.h"
+#include "face.h"
 #include "globalMatting.h"
 #include "guidedfilter.h"
 
@@ -690,11 +688,11 @@ void getSkinCenter(Mat img, Mat skinMask, Mat centers)
 	sort(b.begin(), b.end());
 	sort(g.begin(), g.end());
 	sort(r.begin(), r.end());
-	
+		
 	//get medians as centers
-	uchar medianB = b[cvRound(b.size() / 2)];
-	uchar medianG = g[cvRound(g.size() / 2)];
-	uchar medianR = r[cvRound(r.size() / 2)];
+	uchar medianB = b[cvRound((int)b.size() / 2)];
+	uchar medianG = g[cvRound((int)g.size() / 2)];
+	uchar medianR = r[cvRound((int)r.size() / 2)];
 
 	/*centers.at<uchar>(0, 1) = );
 	centers.at<uchar>(1, 1) = cvRound(g.size()/2);
