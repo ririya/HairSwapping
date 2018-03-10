@@ -3,7 +3,7 @@
 #include <opencv2/imgproc.hpp>
 #include "Face.h"
 
-Face::Face(Mat p_faceMask, Mat p_skinMask, int p_leftEdge, int p_rightEdge, int p_upperPointX, int p_upperPointY, int p_leftEdgeEye, int p_rightEdgeEye, int p_bottomEye, int p_topEye, int p_hairTypicalBottom, Rect p_regionA, Rect p_regionB, Rect p_regionC)
+Face::Face(Mat p_faceMask, Mat p_skinMask, int p_leftEdge, int p_rightEdge, int p_upperPointX, int p_upperPointY, int p_leftEdgeEye, int p_rightEdgeEye, int p_bottomEye, int p_topEye, int p_hairTypicalBottom, int p_headSize, Rect p_regionA, Rect p_regionB, Rect p_regionC)
 	{
 		faceMask = p_faceMask;
 		skinMask = p_skinMask;
@@ -18,6 +18,8 @@ Face::Face(Mat p_faceMask, Mat p_skinMask, int p_leftEdge, int p_rightEdge, int 
 		bottomEye = p_bottomEye;
 		topEye = p_topEye;
 		hairTypicalBottom = p_hairTypicalBottom;
+		headSize = p_headSize;
+			 
 
 		regionA = p_regionA;
 		regionB = p_regionB;
@@ -78,6 +80,11 @@ Face::Face(Mat p_faceMask, Mat p_skinMask, int p_leftEdge, int p_rightEdge, int 
 	int Face::getHairTypicalBottom()
 	{
 		return hairTypicalBottom;
+	}
+
+	int Face::getHeadSize()
+	{
+		return headSize;
 	}
 
 	Rect Face::getRegionA()

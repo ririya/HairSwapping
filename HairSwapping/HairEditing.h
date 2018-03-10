@@ -3,11 +3,11 @@
 
 #include <unordered_set>
 
-Mat swapHair(Hair hair, Face face, Mat modelImg, Mat targetImg, Mat synthesizedFace);
+Mat swapHair(Hair hair, Face face, int modelHeadSize, Mat synthesizedFace);
 
-Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Face face, vector<Point> contours, int refPointX, int refPointY, int refTx, int refTy);
+Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Face face, int modelHeadSize, std::vector<Point> contours, int refPointX, int refPointY, int refTx, int refTy);
 
-int calculateEnergyHoles(Mat hairSwap, Mat hairMask, vector<Point> contours, Face face, Mat skinPixels);
+int calculateEnergyHoles(Mat hairSwap, Mat hairMask, std::vector<Point> contours, Face face, Mat skinPixels);
 int calculateEnergyHairOverlap(Mat hairMask, Face face, Mat skinPixels);
 
 void searchHoles(Mat hairSwap, Mat faceMask, Mat hairMask, int x, int y, std::unordered_set<int> *holes_hashSet);
@@ -20,10 +20,7 @@ void searchLineForHoles(Mat hairMask, int x_interest, int y_interest, int lastHa
 
 Mat convertTo3channels(Mat mat);
 
-Mat trySwapHair(Mat synthesizedFace, Mat scaledHair, Mat scaledHairMask, Face face, Mat skinPixels, vector<Point> contours, int* energyHoles, int* energyHairOverlap);
-
-
-Mat scaleHairOld(Mat imgRGB, int refPointX, int refPointY, double scaleX, double scaleY, Scalar backgroundColor);
+Mat trySwapHair(Mat synthesizedFace, Mat scaledHair, Mat scaledHairMask, Face face, Mat skinPixels, std::vector<Point> contours, int* energyHoles, int* energyHairOverlap);
 
 Mat scaleHair(Mat img, int refPointX, int refPointY, int refTx, int refTy, double scaleX, double scaleY, Scalar backgroundColor);
 
@@ -43,8 +40,8 @@ static const int NUMBER_OF_FACE_COLUMNS_ALLOWED_HAIR = 10;
 
 static const double ENERGY_WEIGHT = 2.0;
 
-static const int MAX_TX = 10;
-static const int MAX_TY = 30;
+static const int MAX_TX = 5;
+static const int MAX_TY = 20;
 static const int STEP_T = 5;
 static const double MIN_SCALE = 0.6;
 static const double MAX_SCALE = 1.2;

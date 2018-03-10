@@ -23,6 +23,7 @@
     <ClInclude Include="FaceRecognition.h" />
     <ClInclude Include="globalmatting.h" />
     <ClInclude Include="guidedfilter.h" />
+    <ClInclude Include="Hair.h" />
     <ClInclude Include="HairEditing.h" />
     <ClInclude Include="HairExtraction.h" />
     <ClInclude Include="ColorEstimate.h" />
@@ -34,11 +35,11 @@
     <ClCompile Include="FaceRecognition.cpp" />
     <ClCompile Include="globalmatting.cpp" />
     <ClCompile Include="guidedfilter.cpp" />
+    <ClCompile Include="Hair.cpp" />
     <ClCompile Include="HairEditing.cpp" />
     <ClCompile Include="HairExtraction.cpp" />
     <ClCompile Include="hairSwapping.cpp" />
     <ClCompile Include="SkinSynthesis.cpp" />
-    <ClCompile Include="ts.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EDD91E28-9930-4EDB-AA86-3C5D86DEB1FF}</ProjectGuid>

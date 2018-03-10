@@ -39,6 +39,9 @@
     <ClInclude Include="Face.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Hair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FaceRecognition.cpp">
@@ -68,7 +71,7 @@
     <ClCompile Include="Face.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ts.cpp">
+    <ClCompile Include="Hair.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

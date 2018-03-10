@@ -11,6 +11,8 @@
 #include "HairExtraction.h"
 #include "SkinSynthesis.h"
 #include "HairEditing.h"
+#include "Hair.h"
+#include "Face.h"
 
 using namespace cv;
 
@@ -76,7 +78,6 @@ void createMosaic(std::string dir, std::string ext, int nRows, int nCols, Scalar
 
 Mat generateResultImage(Mat imgTarget, Mat imgModel, Mat hairSwap)
 {
-
 	int nCols = imgTarget.cols;
 	int nRows = imgTarget.rows;
 
@@ -114,110 +115,161 @@ std::string removeExtension(const std::string& filename) {
 	return filename.substr(0, lastdot);
 }
 
-int main2(int argc, char *argv[])
+void createMosaicImages()
 {
+	if (createMosaicImages)
+	{
+		string dataDir = "data/";
+		string faceDir = "faces/";
+		string modelsDir = "hairmodels/";
+		string segmentationDir = "segmentation/";
+		string resultsDir = "results/";
 
-	//Mat src = imread("airplane.jpg");
-	//Mat dst = imread("sky.jpg");
+		for (int fileInd = 1; fileInd <= 18; fileInd++)
+		{
 
-	//int nChannelssrc = src.channels();
-	//int nChannelsdst = dst.channels();
+			printf("fileInd = %d \n", fileInd);
+			string pathString = dataDir + std::to_string(fileInd) + ".png";
 
-	//// Create a rough mask around the airplane.
-	////Mat src_mask = Mat::zeros(src.rows, src.cols, src.depth());
+			const char * path = pathString.c_str();
+			Mat_<unsigned char> imgGray(imread(path, CV_LOAD_IMAGE_GRAYSCALE));
+			Mat imgRGB(imread(path, CV_LOAD_IMAGE_COLOR));
+			if (!imgRGB.data)
+			{
+				printf("Cannot load %s\n", path);
+				continue;
+				//exit(1);
+			}
 
-	//Mat src_mask = Mat(src.rows, src.cols, CV_8UC1, Scalar(255));
+			Face face = detectFace(imgGray, path, dataDir.c_str());
 
-	//int nChannels = src_mask.channels();
+			Mat segmentationLabels;
+			Hair hair;
 
-	//// Define the mask as a closed polygon
-	////Point poly[1][7];
-	////poly[0][0] = Point(4, 80);
-	////poly[0][1] = Point(30, 54);
-	////poly[0][2] = Point(151, 63);
-	////poly[0][3] = Point(254, 37);
-	////poly[0][4] = Point(298, 90);
-	////poly[0][5] = Point(272, 134);
-	////poly[0][6] = Point(43, 122);
+			int retCode = extractHair(imgRGB, face, &segmentationLabels, &hair);
 
-	////const Point* polygons[1] = { poly[0] };
-	////int num_points[] = { 7 };
+			if (retCode == -1)
+			{
+				printf("Could not extract hair\n");
+				continue;
+			}
 
-	////// Create mask by filling the polygon
-	////fillPoly(src_mask, polygons, num_points, 1, Scalar(255, 255, 255));
+			cv::imwrite(segmentationDir + std::to_string(fileInd) + ".bmp", segmentationLabels);
 
-	////// The location of the center of the src in the dst
-	//Point center(800, 100);
+			Mat hairPixels(imgRGB.rows, imgRGB.cols, CV_8UC3, Scalar(255, 255, 255));
+			imgRGB.copyTo(hairPixels, hair.getHairMask());
 
-	//// Seamlessly clone src into dst and put the results in output
-	//Mat output;
-	//seamlessClone(src, dst, src_mask, center, output, NORMAL_CLONE);
+			cv::imwrite(modelsDir + std::to_string(fileInd) + ".bmp", hairPixels);
 
- // cv:namedWindow("output", WINDOW_AUTOSIZE);
-	//cv::imshow("output", output);
-	//cv::waitKey();
+			Mat synthesizedFace = synthesizeSkin(imgRGB, face, hair);
 
-	/*string dataDir = "data/";
+			cv::imwrite(faceDir + std::to_string(fileInd) + ".bmp", synthesizedFace);
+		}
+
+		//createMosaic(dataDir, ".png", 320, 240, Scalar(255, 0, 0));
+		createMosaic(faceDir, ".bmp", 320, 240, Scalar(255, 0, 0));
+		createMosaic(modelsDir, ".bmp", 320, 240, Scalar(255, 0, 0));
+		createMosaic(segmentationDir, ".bmp", 320, 240, Scalar(255, 255, 255));
+	}
+}
+
+void testAll()
+{
+	string dataDir = "data/";
 	string faceDir = "faces/";
-	string modelsDir = "hairModels/";
+	string modelsDir = "hairmodels/";
 	string segmentationDir = "segmentation/";
-	string resultsDir = "results/";*/
+	string resultsDir = "results/";
 
-	/*createMosaic(dataDir, ".png", 320, 240, Scalar(255,0,0));
-	createMosaic(faceDir, ".bmp", 320, 240, Scalar(255,0,0));
-	createMosaic(modelsDir, ".bmp", 320, 240, Scalar(255,0,0));*/
-	//createMosaic(segmentationDir, ".bmp", 320, 240, Scalar(255,255,255));
+	vector<Face> faces;
+	vector<Hair> hairModels;
+	vector<Mat> synthesizedFaces;
 
-	//for (int fileInd = 1; fileInd <= 18; fileInd++)
-	//{
-	//	string pathStringModel = dataDir + std::to_string(fileInd) + ".png";
+	printf("Generating models\n");
+	for (int fileInd = 1; fileInd <= 18; fileInd++)
+	{
+		printf("fileInd = %d \n", fileInd);
+		string pathString = dataDir + std::to_string(fileInd) + ".png";
 
-	//	const char * pathModel = pathStringModel.c_str();
-	//	Mat_<unsigned char> imgGrayModel(imread(pathModel, CV_LOAD_IMAGE_GRAYSCALE));
-	//	Mat imgRGBModel(imread(pathModel, CV_LOAD_IMAGE_COLOR));
-	//	if (!imgGrayModel.data)
-	//	{
-	//		printf("Cannot load %s\n", imgGrayModel);
-	//		continue;
-	//		//exit(1);
-	//	}
+		const char * path = pathString.c_str();
+		Mat_<unsigned char> imgGray(imread(path, CV_LOAD_IMAGE_GRAYSCALE));
+		Mat imgRGB(imread(path, CV_LOAD_IMAGE_COLOR));
+		if (!imgRGB.data)
+		{
+			printf("Cannot load %s\n", path);
+			continue;
+			//exit(1);
+		}
 
-	//	Face faceModel = detectFace(imgGrayModel, pathModel, dataDir.c_str());
+		Face face = detectFace(imgGray, path, dataDir.c_str());
 
-	//	Mat segmentationLabels;
-	//	Hair hairModel;
+		Mat segmentationLabels;
+		Hair hair;
 
-	//	int retCode = extractHair(imgRGBModel, faceModel, &segmentationLabels, &hairModel);
+		int retCode = extractHair(imgRGB, face, &segmentationLabels, &hair);
 
-	//	if (retCode == -1)
-	//	{
-	//		printf("Could not extract hair\n");
-	//		continue;
-	//	}
+		if (retCode == -1)
+		{
+			printf("Could not extract hair\n");
+			continue;
+		}
+				
+		Mat hairPixels(imgRGB.rows, imgRGB.cols, CV_8UC3, Scalar(255, 255, 255));
+		imgRGB.copyTo(hairPixels, hair.getHairMask());
 
-	//	cv::imwrite(segmentationDir + std::to_string(fileInd) + "_segmentation.bmp", segmentationLabels);
+		cv::imwrite(modelsDir + std::to_string(fileInd) + ".bmp", hairPixels);
 
-	//	Mat hairPixels(imgRGBModel.rows, imgRGBModel.cols, CV_8UC3, Scalar(255, 255, 255));
-	//	imgRGBModel.copyTo(hairPixels, hairModel.getHairMask());
+		Mat synthesizedFace = synthesizeSkin(imgRGB, face, hair);
 
-	//	cv::imwrite(modelsDir + std::to_string(fileInd) + "_hairModel.bmp", hairPixels);
+		cv::imwrite(faceDir + std::to_string(fileInd) + ".bmp", synthesizedFace);
 
-	//	Mat synthesizedFace = synthesizeSkin(imgRGBModel, faceModel, hairModel.getHairMask());
+		faces.push_back(face);
+		hairModels.push_back(hair);
+		synthesizedFaces.push_back(synthesizedFace);
 
-	//	cv::imwrite(faceDir + std::to_string(fileInd) + "_face.bmp", synthesizedFace);
-	//}
+	}
 
+	for (int model = 1; model <= 18; model++)
+	{
+		for (int target = 1; target <= 18; target++)
+		{
+			
+			if (model == target)
+			{
+				continue;
+			}
+
+			printf("Swapping Model %d and Target %d \n", model, target);
+
+			string pathStringModel = dataDir + std::to_string(model) + ".png";
+			string pathStringTarget = dataDir + std::to_string(target) + ".png";
+			const char * pathTarget = pathStringTarget.c_str();
+			const char * pathModel = pathStringModel.c_str();
+
+			Mat imgRGBModel(imread(pathModel, CV_LOAD_IMAGE_COLOR));
+			Mat imgRGBTarget(imread(pathTarget, CV_LOAD_IMAGE_COLOR));
+
+			Hair hairModel = hairModels.at(model - 1);
+			Face faceModel = faces.at(model - 1);
+			Face faceTarget = faces.at(target - 1);
+			Mat synthesizedface = synthesizedFaces.at(target - 1);
+
+			Mat hairSwap = swapHair(hairModel, faceTarget, faceModel.getHeadSize(), synthesizedface);
+
+			Mat resultImage = generateResultImage(imgRGBTarget, imgRGBModel, hairSwap);
+
+			cv::imwrite(resultsDir + "Hair" + std::to_string(model) + "xFace" + std::to_string(target) + ".bmp", resultImage);
+		}
+	}
+}
+
+void swapHairMain(int argc, char *argv[])
+{
 	string dataDir = "data/";
 	string faceDir = "faces/";
 	string modelsDir = "hairModels/";
 	string segmentationDir = "segmentation/";
 	string resultsDir = "results/";
-
-	/*int targetInd = 7;
-	int modelInd = 6;
-
-	string pathStringTarget = dataDir + std::to_string(targetInd) + ".png";
-	string pathStringModel = dataDir + std::to_string(modelInd) + ".png";*/
 
 	string model;
 	string target;
@@ -230,8 +282,8 @@ int main2(int argc, char *argv[])
 
 	else
 	{
-		model = "10.png";
-		target = "8.png";		
+		model = "3.png";
+		target = "7.png";
 	}
 
 	string pathStringModel = dataDir + model;
@@ -242,7 +294,8 @@ int main2(int argc, char *argv[])
 	const char * dataDirC = dataDir.c_str();
 
 	int retCode;
-
+	printf("Model image: %s\n", pathModel);
+	printf("Target image: %s\n", pathTarget);
 	Mat_<unsigned char> imgGrayModel(imread(pathModel, CV_LOAD_IMAGE_GRAYSCALE));
 	Mat imgRGBModel(imread(pathModel, CV_LOAD_IMAGE_COLOR));
 	if (!imgGrayModel.data)
@@ -250,10 +303,6 @@ int main2(int argc, char *argv[])
 		printf("Cannot load %s\n", imgGrayModel);
 		exit(1);
 	}
-
-	/*cv::namedWindow("imgGrayModel", WINDOW_AUTOSIZE);
-	cv::imshow("imgGrayModel", imgGrayModel);
-	cv::waitKey(0);*/
 
 	Mat_<unsigned char> imgGrayTarget(imread(pathTarget, CV_LOAD_IMAGE_GRAYSCALE));
 	Mat imgRGBTarget(imread(pathTarget, CV_LOAD_IMAGE_COLOR));
@@ -263,7 +312,7 @@ int main2(int argc, char *argv[])
 		exit(1);
 	}
 
-	/*printf("Detecting face from model... \n");
+	printf("Detecting face from model... \n");
 	Face faceModel = detectFace(imgGrayModel, pathModel, dataDirC);
 	printf("Face detected. \n");
 
@@ -274,10 +323,10 @@ int main2(int argc, char *argv[])
 	retCode = extractHair(imgRGBModel, faceModel, &segmentationLabelsModel, &hairModel);
 	if (retCode == -1)
 	{
-		printf("Cannot extract hair. \n");
+	printf("Cannot extract hair. \n");
 	}
-	printf("Hair extracted. \n");*/
-	
+	printf("Hair extracted. \n");
+
 	printf("Detecting face from target... \n");
 	Face faceTarget = detectFace(imgGrayTarget, pathTarget, dataDirC);
 	Mat segmentationLabelsTarget;
@@ -285,7 +334,7 @@ int main2(int argc, char *argv[])
 	printf("Face detected. \n");
 
 	printf("Extracting hair from target... \n");
-	retCode = extractHair(imgRGBTarget, faceTarget,&segmentationLabelsTarget,&hairTarget);
+	retCode = extractHair(imgRGBTarget, faceTarget, &segmentationLabelsTarget, &hairTarget);
 
 	if (retCode == -1)
 	{
@@ -294,19 +343,26 @@ int main2(int argc, char *argv[])
 	printf("Hair extracted. \n");
 
 	printf("Synthesizing face... \n");
-	Mat synthesizedface = synthesizeSkin(imgRGBTarget, faceTarget, hairTarget.getHairMask());
-	printf("Face synthesized. \n");
+	Mat synthesizedface = synthesizeSkin(imgRGBTarget, faceTarget, hairTarget);
+	printf("Face synthesized. \n");	
 
-	/*cv:namedWindow("synthesizedface", WINDOW_AUTOSIZE);
-	cv::imshow("synthesizedface", synthesizedface);
-	cv::waitKey();*/
+	Mat hairSwap = swapHair(hairModel, faceTarget, faceModel.getHeadSize(), synthesizedface);
+
+	Mat resultImage = generateResultImage(imgRGBTarget, imgRGBModel, hairSwap);
+
+	cv::imwrite(resultsDir + "Hair" + removeExtension(model) + "xFace" + removeExtension(target) + ".bmp", resultImage);	
+}
 
 
-	//Mat hairSwap = swapHair(hairModel, faceTarget, imgRGBModel, imgRGBTarget, synthesizedface);
+int main(int argc, char *argv[])
+{
+	//createMosaicImages();
 
-	//Mat resultImage = generateResultImage(imgRGBTarget, imgRGBModel, hairSwap);
+	swapHairMain(argc, argv);
 
-	//cv::imwrite(resultsDir + "Hair" + removeExtension(model) + "xFace" + removeExtension(target) + ".bmp", resultImage);
-	
+	//testAll();
+
+	destroyAllWindows();
+
     return 0;
 }

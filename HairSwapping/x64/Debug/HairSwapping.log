@@ -1,13 +1,9 @@
-﻿  ts.cpp
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(44): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(45): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(46): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(47): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(48): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(49): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(50): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(51): warning C4244: '+=': conversion from 'const double' to 'int', possible loss of data
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(153): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'unsigned __int64'
-  e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\ts.cpp(153): note: consider using '%zd' in the format string
+﻿  hairSwapping.cpp
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(67): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(68): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(120): warning C4551: function call missing argument list
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(303): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
+e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\hairswapping\hairswapping.cpp(311): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'cv::Mat_<uchar>'
   HairSwapping.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\HairSwapping\x64\Debug\HairSwapping.exe
   HairSwapping.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\HairSwapping\x64\Debug\HairSwapping.pdb (Partial PDB)

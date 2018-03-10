@@ -27,6 +27,8 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 	int rightEdgeX;
 	int rightEdgeY;
 
+	int headSize;
+
 	Rect RectA;
 	Rect RectB;
 	Rect RectC;
@@ -73,6 +75,8 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 		rightEdgeX = landmarks[2 * RIGHT_EDGE_IND];
 		rightEdgeY = landmarks[2 * RIGHT_EDGE_IND + 1];
 
+		headSize = rightEdgeX - leftEdgeX + 1;
+
 		//find regions A,B,C using landmarks
 		int x1A = landmarks[2 * LEFT_EDGE_OF_LEFT_EYE_IND];
 		int x2A = landmarks[2 * LEFT_EDGE_OF_NOSE_IND] - REGION_A_OFFSET_FROM_NOSE;
@@ -111,13 +115,55 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 		cv::waitKey();*/		
 	}
 
-	int leftEyeEdgeX = landmarks[2 * LEFT_EDGE_OF_LEFT_EYE_IND] - 5;
-	int leftEyeEdgeY = landmarks[2 * LEFT_EDGE_OF_LEFT_EYE_IND +1];
-	int rightEyeEdgex = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND] + 5;
-	int rightEyeEdgeY = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND +1];
-	int topEyeY = min(landmarks[2 * TOP_LEFT_EYEBROW_IND+1], landmarks[2 * TOP_RIGHT_EYEBROW_IND + 1]) - 2;
-	int topEyeX = landmarks[2 * TOP_LEFT_EYEBROW_IND];
-	int bottomEyeY = max(landmarks[2 * BASE_OF_LEFT_EYE_IND + 1], landmarks[2 * BASE_OF_RIGHT_EYE_IND + 1]) + 5;
+	int eyeTopMarkerPos = img.rows;
+	int eyeTopMarkerInd;
+	int eyeLeftMarkerPos = img.cols;
+	int eyeLeftMarkerInd;
+	int eyeRightMarkerPos = 0;
+	int eyeRightMarkerInd;
+
+	for (int k = FIRST_EYE_IND; k <= LAST_EYE_IND; k++)
+	{
+		int currentLandmarkX = landmarks[2 * k];
+		int currentLandmarkY = landmarks[2 * k + 1];
+
+		if (currentLandmarkY < eyeTopMarkerPos)
+		{
+			eyeTopMarkerInd = k;
+			eyeTopMarkerPos = currentLandmarkY;
+		}
+
+		if (currentLandmarkX < eyeLeftMarkerPos)
+		{
+			eyeLeftMarkerInd = k;
+			eyeLeftMarkerPos = currentLandmarkX;
+		}
+
+		if (currentLandmarkX > eyeRightMarkerPos)
+		{
+			eyeRightMarkerInd = k;
+			eyeRightMarkerPos = currentLandmarkX;
+		}
+
+
+	}
+
+	int leftEyeEdgeX = landmarks[2 * LEFT_EDGE_OF_LEFT_EYE_IND] - EYE_EDGE_OFFSET_X;
+	int leftEyeEdgeY = landmarks[2 * LEFT_EDGE_OF_LEFT_EYE_IND + EYE_EDGE_OFFSET_Y];
+	//int rightEyeEdgex = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND] + EYE_EDGE_OFFSET_X;
+	//int rightEyeEdgeY = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND + EYE_EDGE_OFFSET_Y];
+	/*int leftEyebrowY = landmarks[2 * TOP_LEFT_EYEBROW_IND + 1];
+	int rightEyebrowY = landmarks[2 * TOP_RIGHT_EYEBROW_IND + 1];*/
+	//int topEyeY = min(leftEyebrowY, rightEyebrowY) - TOP_EYE_OFFSET_Y;
+	//int topEyeX = landmarks[2 * TOP_RIGHT_EYEBROW_IND];
+
+	int rightEyeEdgex = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND] + EYE_EDGE_OFFSET_X;
+	int rightEyeEdgeY = landmarks[2 * RIGHT_EDGE_OF_RIGHT_EYE_IND + EYE_EDGE_OFFSET_Y];
+
+	int topEyeY = landmarks[2 * eyeTopMarkerInd + 1] - TOP_EYE_OFFSET_Y;
+	int topEyeX = landmarks[2 * eyeTopMarkerInd];
+
+	int bottomEyeY = max(landmarks[2 * BASE_OF_LEFT_EYE_IND + 1], landmarks[2 * BASE_OF_RIGHT_EYE_IND + 1]) + BOTTOM_EYE_OFFSET_Y;
 	int bottomEyeX = landmarks[2 * BASE_OF_LEFT_EYE_IND + 1];
 	int bottomNoseY = landmarks[2 * BASE_OF_NOSE_IND + 1];
 	int bottomNoseX = landmarks[2 * BASE_OF_NOSE_IND];
@@ -125,21 +171,22 @@ Face detectFace(Mat_<unsigned char> img, const char * path, const char* dataDir)
 	int topOfMouthIndX = landmarks[2 * TOP_OF_MOUTH_IND];
 	int hairTypicalBottom = (bottomNoseY + topOfMouthIndY) / 2;
 
-	//img(cvRound(leftEyeEdgeY), cvRound(leftEyeEdgeX)) = 255;
-	//img(cvRound(rightEyeEdgeY), cvRound(rightEyeEdgex)) = 255;
-	//img(cvRound(topEyeY), cvRound(topEyeX)) = 255;
-	//img(cvRound(bottomEyeY), cvRound(bottomEyeX)) = 255;
-	//img(cvRound(bottomNoseY), cvRound(bottomNoseX)) = 255;
-	//img(cvRound(topOfMouthIndY), cvRound(topOfMouthIndX)) = 255;
+	img(cvRound(leftEyeEdgeY), cvRound(leftEyeEdgeX)) = 255;
+	img(cvRound(rightEyeEdgeY), cvRound(rightEyeEdgex)) = 255;
+	img(cvRound(topEyeY), cvRound(topEyeX)) = 255;
+	img(cvRound(bottomEyeY), cvRound(bottomEyeX)) = 255;
+	img(cvRound(bottomNoseY), cvRound(bottomNoseX)) = 255;
+	img(cvRound(topOfMouthIndY), cvRound(topOfMouthIndX)) = 255;
 	//
 
 	/*img(cvRound(leftEdgeY), cvRound(leftEdgeX)) = 255;
-	img(cvRound(rightEdgeY), cvRound(rightEdgeX)) = 255;
+	img(cvRound(rightEdgeY), cvRound(rightEdgeX)) = 255;*/
 
+	/*namedWindow("face", CV_WINDOW_AUTOSIZE);
 	cv::imshow("face", img);
 	cv::waitKey();*/
 
-	Face face(faceMask, skinMask, leftEdgeX, rightEdgeX, upperPointX, upperPointY, leftEyeEdgeX, rightEyeEdgex, bottomEyeY, topEyeY, hairTypicalBottom, RectA, RectB, RectC);
+	Face face(faceMask, skinMask, leftEdgeX, rightEdgeX, upperPointX, upperPointY, leftEyeEdgeX, rightEyeEdgex, bottomEyeY, topEyeY, hairTypicalBottom, headSize, RectA, RectB, RectC);
 	return face;
 
 }

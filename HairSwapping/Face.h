@@ -5,6 +5,8 @@ using namespace cv;
 
 class Face
 {
+	
+
 	Mat faceMask;
 	Mat skinMask;
 	Mat facePixels;
@@ -22,13 +24,15 @@ class Face
 
 	int hairTypicalBottom;
 
+	int headSize;
+
 	Rect regionA;
 	Rect regionB;
 	Rect regionC;
 
 public:
 
-	Face(Mat p_faceMask, Mat p_skinMask, int p_leftEdge, int p_rightEdge, int p_upperPointX, int p_upperPointY, int p_leftEdgeEye, int p_rightEdgeEye, int p_bottomEye, int p_topEye, int p_hairTypicalBottom, Rect p_regionA, Rect p_regionB, Rect p_regionC);
+	Face(Mat p_faceMask, Mat p_skinMask, int p_leftEdge, int p_rightEdge, int p_upperPointX, int p_upperPointY, int p_leftEdgeEye, int p_rightEdgeEye, int p_bottomEye, int p_topEye, int p_hairTypicalBottom, int p_headSize, Rect p_regionA, Rect p_regionB, Rect p_regionC);
 
 	Mat getFaceMask();
 
@@ -51,6 +55,8 @@ public:
 	int getBottomEye();
 
 	int getHairTypicalBottom();
+
+	int getHeadSize();
 
 	Rect getRegionA();
 

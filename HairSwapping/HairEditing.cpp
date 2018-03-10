@@ -9,13 +9,12 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include "Face.h"
-#include "HairExtraction.h"
-#include "SkinSynthesis.h"
+#include "Hair.h"
 #include "HairEditing.h"
 
 using namespace cv;
 
-Mat swapHair(Hair hair, Face face, Mat modelImg, Mat targetImg, Mat synthesizedFace)
+Mat swapHair(Hair hair, Face face, int modelHeadSize, Mat synthesizedFace)
 {	
 	//initial Position estimation, connecting by position J in the two images
 	int connXModel = hair.getHairConnectionPointLocationX();
@@ -55,13 +54,13 @@ Mat swapHair(Hair hair, Face face, Mat modelImg, Mat targetImg, Mat synthesizedF
 	Mat translationMatrix = (Mat_<double>(2, 3) << 1, 0, distModelTargetX, 0, 1, distModelTargetY);
 	warpAffine(hairAlpha, hairPixelsShifted, translationMatrix, hairMask.size(), 1, 0, Scalar(BACKGROUND_HAIR_B, BACKGROUND_HAIR_G, BACKGROUND_HAIR_R,0));
 	
-	vector<vector<Point> > contours;
+	std::vector<std::vector<Point> > contours;
 
 	Mat contourImg = face.getFaceMask().clone()*255;
 
 	findContours(contourImg, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);	
 
-	Mat hairSwap = findBestScaleAndPosition(synthesizedFace, hairAlpha, face, contours[0], refPointX, refPointY, distModelTargetX, distModelTargetY);
+	Mat hairSwap = findBestScaleAndPosition(synthesizedFace, hairAlpha, face, modelHeadSize, contours[0], refPointX, refPointY, distModelTargetX, distModelTargetY);
 
 	return hairSwap;
 
@@ -78,7 +77,7 @@ Mat convertTo3channels(Mat mat)
 }
 
 
-Mat trySwapHair(Mat synthesizedFace, Mat scaledHair, Mat scaledHairMask, Face face, Mat skinPixels, vector<Point> contours, int* energyHoles, int* energyHairOverlap)
+Mat trySwapHair(Mat synthesizedFace, Mat scaledHair, Mat scaledHairMask, Face face, Mat skinPixels, std::vector<Point> contours, int* energyHoles, int* energyHairOverlap)
 {
 
 	clock_t  tStartSwap, tEndSwap, tStartHoles, tEndHoles, tStartOverlap, tEndOverlap;
@@ -171,7 +170,7 @@ Mat createAlphaImage(Mat mat, Mat alpha)
 	return alphaImage;
 }
 
-Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Face face, vector<Point> contours, int refPointX, int refPointY, int refTx, int refTy)
+Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Face face, int modelHeadSize, std::vector<Point> contours, int refPointX, int refPointY, int refTx, int refTy)
 {
 
 	Mat floatSynthesizedFace;
@@ -188,6 +187,10 @@ Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Face face, vec
 	int bestEnergyHairOverlap = minEnergy;
 	Mat bestScaledHair;
 
+	double headSizeRatio = (double) face.getHeadSize() / modelHeadSize;
+
+	double minScale = headSizeRatio - 0.1;
+	double maxScale = headSizeRatio + 0.1;
 
 	double bestParams[4]; //best tx, ty, sX, sY
 
@@ -261,15 +264,13 @@ Mat findBestScaleAndPosition(Mat synthesizedFace, Mat hairPixels, Face face, vec
 	time(&end);
 	double dif = difftime(end, start);
 	printf("Finished calculting best hair position in %.2lf seconds.\n", dif);
+	
 	printf("Type a key to continue...", dif);
-
-	//cv::namedWindow("bestScaledHair", CV_WINDOW_AUTOSIZE);
-	//cv::imshow("bestScaledHair", bestScaledHair);
-	//cv::waitKey();
 
 	cv::namedWindow("BestMatch", CV_WINDOW_AUTOSIZE);
 	cv::imshow("BestMatch", BestMatch);
 	cv::waitKey();
+
 
 	return BestMatch;
 }
@@ -300,15 +301,11 @@ int calculateEnergyHairOverlap(Mat scaledHairMask, Face face, Mat skinPixels)
 	hairOnSkinNonTransparent.setTo(1, hairOnSkin > ALPHA_THRESHOLD);
 
 	Scalar Energy = sum(hairOnSkinNonTransparent);
-
-	//Mat difference = hairOnSkin != skinPixels;
-	//cvtColor(difference, difference, CV_RGB2GRAY);
-	//int Energy = countNonZero(difference);
-
+	
 	return Energy[0];
 }
 
-int calculateEnergyHoles(Mat hairSwap, Mat hairMask, vector<Point> contours, Face face, Mat skinPixels)
+int calculateEnergyHoles(Mat hairSwap, Mat hairMask, std::vector<Point> contours, Face face, Mat skinPixels)
 {
 
 	std::unordered_set<int> holes_hashSet;
@@ -660,9 +657,7 @@ Mat scaleHair(Mat img, int refPointX, int refPointY, int refTx, int refTy, doubl
 	Mat translationMatrixFinal = (Mat_<double>(2, 3) << 1, 0, refTx, 0, 1, refTy);
 
 	warpAffine(corrected, finalTranslation, translationMatrixFinal, corrected.size(), 1, 0, Scalar(BACKGROUND_HAIR_B, BACKGROUND_HAIR_G, BACKGROUND_HAIR_R, 0));*/
-
-
-
+	
 
 	/*cv::namedWindow("original1", CV_WINDOW_AUTOSIZE);
 	cv::imshow("original1", img);
@@ -681,62 +676,4 @@ Mat scaleHair(Mat img, int refPointX, int refPointY, int refTx, int refTy, doubl
 	//cv::waitKey();
 	
 	return corrected;
-}
-
-Mat scaleHairOld(Mat imgRGB, int refPointX, int refPointY, double scaleX, double scaleY, Scalar backgroundColor)
-{
-	int origWidth = imgRGB.cols;
-	int origHeight = imgRGB.rows;	
-
-	Mat translated;
-	Mat scaled;
-
-	int tx = origWidth / 2 - refPointX;
-	int ty = origHeight / 2 - refPointY;
-
-	double newWidth = imgRGB.cols*scaleX;
-	double newHeight = imgRGB.rows*scaleY;
-
-	Mat translationMatrix = (Mat_<double>(2, 3) << 1, 0, tx, 0, 1, ty);
-
-	warpAffine(imgRGB, translated, translationMatrix, Size(origWidth, origHeight),1, 0, backgroundColor);
-
-	Mat scalingMatrix = (Mat_<double>(2, 3) << scaleX, 0, 0, 0, scaleY, 0);
-
-	warpAffine(translated, scaled, scalingMatrix, Size(newWidth, newHeight), 1, 0, backgroundColor);
-
-	Mat rescaledCentered;
-	if (newHeight > origHeight || newWidth > origWidth)
-	{
-		Rect rectCrop(cvRound(newWidth / 2) - cvRound(origWidth / 2), cvRound(newHeight / 2) - cvRound(origHeight / 2), origWidth, origHeight);
-		rescaledCentered = Mat(scaled, rectCrop);
-	}
-	else
-	{
-		rescaledCentered = Mat(imgRGB.size(), imgRGB.type(), backgroundColor);
-
-		Rect rectCrop(cvRound(origWidth / 2) - cvRound(newWidth / 2), cvRound(origHeight / 2) - cvRound(newHeight / 2), newWidth, newHeight);
-
-		scaled.copyTo(rescaledCentered(rectCrop));
-	}
-
-	Mat translationMatrix2 = (Mat_<double>(2, 3) << 1, 0, -tx, 0, 1, -ty);
-
-	Mat rescaledCorrected;
-
-	warpAffine(rescaledCentered, rescaledCorrected, translationMatrix2, Size(origWidth, origHeight), 1, 0, backgroundColor);
-
-	
-	cv::namedWindow("scaled2", CV_WINDOW_AUTOSIZE);
-	cv::imshow("scaled2", scaled);
-
-	cv::namedWindow("rescaledCentered2", CV_WINDOW_AUTOSIZE);
-	cv::imshow("rescaledCentered2", rescaledCentered);
-	cv::waitKey();
-
-	cv::namedWindow("rescaledCorrected2", CV_WINDOW_AUTOSIZE);
-	cv::imshow("rescaledCorrected2", rescaledCorrected);
-	cv::waitKey();
-
-	return rescaledCorrected;
 }

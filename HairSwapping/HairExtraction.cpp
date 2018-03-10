@@ -7,6 +7,7 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include "HairExtraction.h"
+#include "Hair.h"
 #include "face.h"
 #include "globalMatting.h"
 #include "guidedfilter.h"
@@ -32,7 +33,24 @@ int extractHair(Mat img, Face face, Mat *labels, Hair *hair)
 
 	Mat labelsSequence = segmentImage(pixelSequence, centers, img.rows, img.cols);
 
+	double hairDist0 = pow(centers.at<uchar>(HAIR_CENTER_INDEX, 0) - centers.at<uchar>(CLOTHES_CENTER_INDEX, 0), 2);
+	double hairDist1 = pow(centers.at<uchar>(HAIR_CENTER_INDEX, 1) - centers.at<uchar>(CLOTHES_CENTER_INDEX, 1), 2);
+	double hairDist2 = pow(centers.at<uchar>(HAIR_CENTER_INDEX, 2) - centers.at<uchar>(CLOTHES_CENTER_INDEX, 2), 2);
+
+	double distanceHairClothes = sqrt(hairDist0 + hairDist1 + hairDist2);
+
+	if (distanceHairClothes < HAIR_CLOTHES_DIST_THRESHOLD)
+	{
+		Mat clothesMask = (labelsSequence == CLOTHES_CENTER_INDEX);
+		Mat newIndex = Mat::ones(clothesMask.size(), clothesMask.type())*HAIR_CENTER_INDEX;
+		newIndex.copyTo(labelsSequence, clothesMask);
+	}
+
 	*labels = getLabelsImage(labelsSequence, img.rows, img.cols);
+
+	//namedWindow("labels", CV_WINDOW_AUTOSIZE);
+	//cv::imshow("labels", *labels);
+	//cv::waitKey();
 	
 	Mat hairImageMask = findHairPixels(pixelSequence, labelsSequence, img.rows, img.cols, face.getUpperPointX(), face.getUpperPointY());
 	
@@ -91,6 +109,8 @@ int extractHair(Mat img, Face face, Mat *labels, Hair *hair)
 
 	Mat hairPixels;
 
+	Mat hairImageMaskNoMatting = hairImageMask.clone();
+
 	if (USE_MATTING)
 	{
 		hairPixels = performMatting(&hairImageMask, img);
@@ -99,13 +119,7 @@ int extractHair(Mat img, Face face, Mat *labels, Hair *hair)
 	/*Mat hairPixels(img.rows, img.cols, CV_8UC3, Scalar(255, 255, 255));
 	img.copyTo(hairPixels, hairImageMask);*/
 	
-
-	cv::imwrite("hair.png", hairPixels);
-
-	/*cv::imshow("hairPixelsAfterMatting", hairPixels);
-	cv::waitKey();*/
-
-	*hair = findConnectionPoint(hairImageMask, hairPixels, face);
+	*hair = findConnectionPoint(hairImageMask, hairImageMaskNoMatting, hairPixels, face);
 
 	//int upperPointX = face.getUpperPointX();
 	//int upperPointY = face.getUpperPointY();
@@ -210,24 +224,11 @@ Mat findHairPixels(Mat pixelSequence, Mat labels, int nRows, int nCols, int uppe
 			hairImageMask.at<uchar>(y, x) = 1;
 		}
 	}
-/*
-	cv::imshow("hairImageMaskErosion", hairImageMaskWhite);
-	cv::waitKey();
-
-	cv::imshow("hairImageMaskDilation", hairImageMaskGray);
-	cv::waitKey();
-
-	cv::imshow("hairImageMaskSubtraction", hairImageMaskSubtraction);
-	cv::waitKey();*/
-
-
-	//cv::imshow("hairImageMask2", hairImageMask2);
-	//cv::waitKey();
 
 	return hairImageMask;
 }
 
-Hair findConnectionPoint(Mat hairMask, Mat hairPixels, Face face)
+Hair findConnectionPoint(Mat hairMask, Mat hairImageMaskNoMatting, Mat hairPixels, Face face)
 {
 
 	int hairConnectionPointLocationX;
@@ -236,7 +237,7 @@ Hair findConnectionPoint(Mat hairMask, Mat hairPixels, Face face)
 	int hairConnectionPointDistanceToJ_X;
 	int hairConnectionPointDistanceToJ_Y;
 
-	double minDist = 10000;	
+	double minDist = INT_MAX;
 
 	for (int i = 0; i < hairMask.rows; i++)
 	{
@@ -260,12 +261,8 @@ Hair findConnectionPoint(Mat hairMask, Mat hairPixels, Face face)
 			}
 		}
 	}
-
-	/*cv::namedWindow("hairPixels", CV_WINDOW_AUTOSIZE);
-	cv::imshow("hairPixels", hairPixels);
-	cv::waitKey();*/
-
-	return Hair(hairMask, hairPixels, hairConnectionPointLocationX, hairConnectionPointLocationY, hairConnectionPointDistanceToJ_X, hairConnectionPointDistanceToJ_Y);
+	
+	return Hair(hairMask, hairPixels, hairImageMaskNoMatting, hairConnectionPointLocationX, hairConnectionPointLocationY, hairConnectionPointDistanceToJ_X, hairConnectionPointDistanceToJ_Y);
 }
 
 Mat performMatting(Mat *hairImageMask, Mat Image)
@@ -291,9 +288,7 @@ Mat performMatting(Mat *hairImageMask, Mat Image)
 
 	//cv::imshow("trimap", trimap);
 	//cv::waitKey();
-
-
-	cv::imwrite("trimap.png", trimap);
+	//cv::imwrite("trimap.png", trimap);
 
 	expansionOfKnownRegions(Image, trimap, 9);
 
@@ -312,9 +307,7 @@ Mat performMatting(Mat *hairImageMask, Mat Image)
 		}
 
 	//cv::imwrite("foreground.png", foreground);
-	cv::imwrite("alpha.png", alpha);
-
-	cv::imwrite("image.png", Image);
+	//cv::imwrite("alpha.png", alpha);
 
 	threshold(alpha, *hairImageMask, 0.0, 1.0, cv::THRESH_BINARY);
 
@@ -327,27 +320,42 @@ Mat performMatting(Mat *hairImageMask, Mat Image)
 
 	cv::merge(matChannels, alphaImage);
 
-	cv::imwrite("alphaImage.png", alphaImage);
+	//cv::imwrite("alphaImage.png", alphaImage);
 
 	return alphaImage;
 }
 
 int findHairBlob(vector<vector<Point2i>> blobs, int upperPointX, int upperPointY)
 {
-	for (size_t i = 0; i < blobs.size(); i++) {
+	for (int row = upperPointY; row >= 0; row--) //search up starting from the upper point and look for intersecting hair blob
+	{
+		for (size_t i = 0; i < blobs.size(); i++) {
 
-		for (size_t j = 0; j < blobs[i].size(); j++) {
-
-			int x = blobs[i][j].x;
-			int y = blobs[i][j].y;
-
-			if ( abs(x - upperPointX) < 3 && abs(y - (upperPointY - OFFSET_HAIR)) < 3) // this blob intersects with the upper point
+			if (blobs[i].size() < 10) //if too few points on this blob, ignore it
 			{
-				return i;				
+				continue;
 			}
 
+			for (size_t j = 0; j < blobs[i].size(); j++) {
+
+				int x = blobs[i][j].x;
+				int y = blobs[i][j].y;
+
+				if (x == upperPointX && y == row) // this blob is the closest to the upperPoint
+				{
+					return i; 
+				}
+
+				//if (abs(x - upperPointX) < 3 && abs(y - (upperPointY - OFFSET_HAIR)) < 3) // this blob intersects with the upper point
+				//{
+				//	return i;
+				//}
+
+			}
 		}
 	}
+
+	
 
 	return -1;
 }
@@ -384,7 +392,7 @@ Mat performKmeans(Mat pixelSequence, Mat centers, int maxIterations, int nRows, 
 			uchar g = pixel.at<uchar>(0, 1);
 			uchar r = pixel.at<uchar>(0, 2);
 
-			double minDist = 10000;  //initialize with large number
+			double minDist = INT_MAX;  //initialize with large number
 
 			double bestB;
 			double bestG;

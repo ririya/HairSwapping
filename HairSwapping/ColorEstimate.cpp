@@ -66,7 +66,7 @@ void ColorEstimate::estimateColors(Mat A, Mat B, Mat C)
 	meanStdDev(A, meanA, stddevA);
 	meanStdDev(C, meanC, stddevC);
 	meanStdDev(B, meanB, stddevB);
-
+	
 	//Scalar A_mean = mean(A_Lab);
 	//Scalar C_mean = mean(C_Lab);
 
@@ -82,7 +82,6 @@ void ColorEstimate::estimateColors(Mat A, Mat B, Mat C)
 	uchar avg_b = (uchar)(sumB / 2);
 
 	avgSkinColor = Scalar(avg_a, avg_b);
-	
 }
 
 ColorEstimate::ColorEstimate(Mat A, Mat B, Mat C)
