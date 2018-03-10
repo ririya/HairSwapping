@@ -1,10 +1,4 @@
 ﻿  facedet.cpp
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\mod_1\facedet.cpp(191): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\mod_1\facedet.cpp(197): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\mod_1\facedet.cpp(204): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
   Generating Code...
   Compiling...
   stasm_lib.cpp
@@ -14,16 +8,8 @@ e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\mod_1\
   shapehacks.cpp
   shape17.cpp
   print.cpp
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\print.cpp(36): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(207): note: see declaration of 'fopen'
   pinstart.cpp
   misc.cpp
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\misc.cpp(71): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\misc.cpp(248): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\misc.cpp(768): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
   landmarks.cpp
   hatdesc.cpp
   hat.cpp
@@ -31,13 +17,10 @@ e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\misc.c
   eyedist.cpp
   eyedet.cpp
   err.cpp
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\err.cpp(84): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
-e:\dropbox (asu)\projects\gitrepositories\hairswapping\hairswapping\stasm\err.cpp(87): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\stdio.h(1772): note: see declaration of 'sprintf'
   convshape.cpp
   classicdesc.cpp
   asm.cpp
   initasm.cpp
   Generating Code...
-LINK : fatal error LNK1104: cannot open file 'opencv_calib3d2413d.lib'
+  stasm.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\StasmProject\x64\Debug\Stasm.exe
+  stasm.vcxproj -> E:\Dropbox (ASU)\Projects\GitRepositories\HairSwapping\HairSwapping\StasmProject\x64\Debug\Stasm.pdb (Partial PDB)
